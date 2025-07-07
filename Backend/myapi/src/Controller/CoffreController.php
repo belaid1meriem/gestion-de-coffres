@@ -2,35 +2,36 @@
 
 namespace App\Controller;
 
+use App\Repository\CoffreRepository;
+use App\Repository\UserRepository;
+use App\Service\CodeGeneratorService;
+use App\Service\CoffreService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 final class CoffreController extends AbstractController
 {
-    #[Route('/coffres', name: 'coffre')]
-    public function index(): JsonResponse
+    #[Route('/coffres', name: 'coffre-all')]
+    public function index(CoffreService $coffreService, CoffreRepository $coffreRepository): JsonResponse
     {
-        return $this->json([
-            'coffres' => [
-                ['id' => 1, 'name' => 'Coffre A'],
-                ['id' => 2, 'name' => 'Coffre B'],
-             ]
-        ]);
+        $coffres = $coffreService->findAll($coffreRepository);
+        //TODO: Use a Serializer instead
+        $coffres = array_map(fn($coffre) => [
+                'id' => $coffre->getId(),
+                'name' => $coffre->getName(),
+            ], $coffres);
+        return $this->json($coffres);
     }
 
-    #[Route('/coffre', name: 'create_coffre', methods: ['POST'])]
-    public function create(Request $request): JsonResponse
+    #[Route('/coffre', name: 'coffre-new', methods: ['POST'])]
+    public function create(Request $request, CoffreService $coffreService, CodeGeneratorService $codeGeneratorService, CoffreRepository $cr, UserRepository $ur, EntityManagerInterface $em): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-
+        $payload = json_decode($request->getContent(), true);
+        $code = $coffreService->add($payload['name'], $payload['user'],$codeGeneratorService, $cr, $ur, $em);
         return $this->json([
-            'coffre' => [
-                'id' => $data['id'],
-                'name' => $data['name'],
-                'code'=> $data['code'],
-            ],
-            'message' => 'Coffre created successfully',
+            'code' => $code
         ]);
     }
 
