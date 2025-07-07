@@ -33,7 +33,7 @@ class Historique
         return $this->id;
     }
 
-    public function getCodeId(): ?Code
+    public function getCode(): ?Code
     {
         return $this->code;
     }

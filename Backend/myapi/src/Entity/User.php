@@ -88,7 +88,7 @@ class User
     {
         if (!$this->historiques->contains($historique)) {
             $this->historiques->add($historique);
-            $historique->setUserId($this);
+            $historique->setUser($this);
         }
 
         return $this;
@@ -98,8 +98,8 @@ class User
     {
         if ($this->historiques->removeElement($historique)) {
             // set the owning side to null (unless already changed)
-            if ($historique->getUserId() === $this) {
-                $historique->setUserId(null);
+            if ($historique->getUser() === $this) {
+                $historique->setUser(null);
             }
         }
 

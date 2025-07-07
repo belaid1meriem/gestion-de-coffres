@@ -44,8 +44,8 @@ class Code
     public function setHistorique(Historique $historique): static
     {
         // set the owning side of the relation if necessary
-        if ($historique->getCodeId() !== $this) {
-            $historique->setCodeId($this);
+        if ($historique->getCode() !== $this) {
+            $historique->setCode($this);
         }
 
         $this->historique = $historique;

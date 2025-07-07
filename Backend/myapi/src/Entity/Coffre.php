@@ -58,7 +58,7 @@ class Coffre
     {
         if (!$this->historiques->contains($historique)) {
             $this->historiques->add($historique);
-            $historique->setCoffreId($this);
+            $historique->setCoffre($this);
         }
 
         return $this;
@@ -68,8 +68,8 @@ class Coffre
     {
         if ($this->historiques->removeElement($historique)) {
             // set the owning side to null (unless already changed)
-            if ($historique->getCoffreId() === $this) {
-                $historique->setCoffreId(null);
+            if ($historique->getCoffre() === $this) {
+                $historique->setCoffre(null);
             }
         }
 
