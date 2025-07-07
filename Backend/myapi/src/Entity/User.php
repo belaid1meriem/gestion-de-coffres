@@ -27,7 +27,7 @@ class User
     /**
      * @var Collection<int, Historique>
      */
-    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'userId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $historiques;
 
     public function __construct()

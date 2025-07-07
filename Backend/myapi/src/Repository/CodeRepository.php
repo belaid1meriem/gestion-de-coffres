@@ -16,6 +16,15 @@ class CodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Code::class);
     }
 
+    public function findByCode(string $code): Code|null
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.code = :code')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Code[] Returns an array of Code objects
     //     */

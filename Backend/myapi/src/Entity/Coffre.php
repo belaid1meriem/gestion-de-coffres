@@ -21,7 +21,7 @@ class Coffre
     /**
      * @var Collection<int, Historique>
      */
-    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'coffreId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Historique::class, mappedBy: 'coffre', orphanRemoval: true)]
     private Collection $historiques;
 
     public function __construct()

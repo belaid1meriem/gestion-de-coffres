@@ -16,6 +16,15 @@ class CoffreRepository extends ServiceEntityRepository
         parent::__construct($registry, Coffre::class);
     }
 
+    public function findCoffreById(int $id): ?Coffre
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Coffre[] Returns an array of Coffre objects
     //     */

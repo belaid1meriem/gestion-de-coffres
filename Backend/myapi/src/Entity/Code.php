@@ -16,7 +16,7 @@ class Code
     #[ORM\Column(length: 36)]
     private ?string $code = null;
 
-    #[ORM\OneToOne(mappedBy: 'codeId', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'code', cascade: ['persist', 'remove'])]
     private ?Historique $historique = null;
 
     public function getId(): ?int
