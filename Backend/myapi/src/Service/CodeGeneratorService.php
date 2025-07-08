@@ -11,16 +11,17 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CodeGeneratorService
 {
-    public function generateCode($payload, CoffreRepository $cr, UserRepository $ur, EntityManagerInterface $em): ?string
+    public function generateCode(int $coffreId, User $user, CoffreRepository $cr, UserRepository $ur, EntityManagerInterface $em): ?string
     {
-        $coffre = $cr->findCoffreById($payload['coffre']);
+        $coffre = $cr->findCoffreById($coffreId);
+
         if (!$coffre) return null;
 
-        $user = $ur->findUserById($payload['user']);
+        $user = $ur->findUserById($user);
         if (!$user) return null;
 
-        $code = new Code()
-            ->setCode(bin2hex(random_bytes(18)));
+        $code = $this->generateCode($coffre, $user, $em);
+        $coffre->setCode($code);
 
         $historique = new Historique()
             ->setCoffre($coffre)

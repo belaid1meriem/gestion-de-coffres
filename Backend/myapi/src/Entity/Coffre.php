@@ -18,6 +18,10 @@ class Coffre
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 36)]
+    private ?string $code = null;
+
+
     /**
      * @var Collection<int, Historique>
      */
@@ -74,5 +78,16 @@ class Coffre
         }
 
         return $this;
+    }
+
+    public function setCode(?string $code): Coffre
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
     }
 }

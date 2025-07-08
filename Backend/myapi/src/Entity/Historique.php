@@ -15,7 +15,7 @@ class Historique
 
     #[ORM\OneToOne(inversedBy: 'historique', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Code $code = null;
+    private ?string $code = null;
 
     #[ORM\ManyToOne(inversedBy: 'historiques')]
     #[ORM\JoinColumn(nullable: false)]
