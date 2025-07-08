@@ -1,4 +1,4 @@
-#TODO
+# TODO
 - adding serialzers
 - adding DTOs and validation
 - edge cases and error handling
