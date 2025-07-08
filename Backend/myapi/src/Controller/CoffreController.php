@@ -25,7 +25,7 @@ final class CoffreController extends AbstractController
         return $this->json($coffres);
     }
 
-    #[Route('/coffre', name: 'coffre-new', methods: ['POST'])]
+    #[Route('/coffre/add', name: 'coffre-add', methods: ['POST'])]
     public function create(Request $request, CoffreService $coffreService, CodeGeneratorService $codeGeneratorService, CoffreRepository $cr, UserRepository $ur, EntityManagerInterface $em): JsonResponse
     {
         $payload = json_decode($request->getContent(), true);
@@ -35,18 +35,13 @@ final class CoffreController extends AbstractController
         ]);
     }
 
-    #[Route('/coffre', name: 'edit_coffre', methods: ['PUT'])]
-    public function edit(Request $request): JsonResponse
+    #[Route('/coffre/update/{id}', name: 'cofre-update', methods: ['PUT'])]
+    public function edit(Request $request, string $id, CoffreService $coffreService, CoffreRepository$coffreRepository, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-
+        $isUpdated = $coffreService->update($id, $data['name'], $coffreRepository, $em);
         return $this->json([
-            'coffre' => [
-                'id' => $data['id'],
-                'name' => $data['name'],
-                'code'=> $data['code'],
-            ],
-            'message' => 'Coffre edited successfully',
+            'message' => $isUpdated ? 'Coffre edited successfully' : 'Coffre not found',
         ]);
     }
 }

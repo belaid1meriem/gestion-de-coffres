@@ -25,4 +25,16 @@ class CoffreService
         $code = $codeGeneratorService->generateCodeWithCoffre($coffre, $user, $cr, $ur, $em);
         return [$code, $coffre];
     }
+
+    public function update(string $id, string $name, CoffreRepository $cr, EntityManagerInterface $em)
+    {
+        $coffre = $cr->find($id);
+
+        if (!$coffre) return false;
+
+        $coffre->setName($name);
+        $em->flush();
+
+        return true;
+    }
 }
