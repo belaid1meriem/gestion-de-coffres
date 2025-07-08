@@ -16,6 +16,14 @@ class HistoriqueRepository extends ServiceEntityRepository
         parent::__construct($registry, Historique::class);
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder("h")
+            ->getQuery()
+            ->getResult();
+    }        
+
+
     //    /**
     //     * @return Historique[] Returns an array of Historique objects
     //     */
