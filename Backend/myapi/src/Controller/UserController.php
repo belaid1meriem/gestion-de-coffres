@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class UserController extends AbstractController
 {
-    #[Route('/login', name: 'login', methods:['POST'])]
+    #[Route('/login', name: 'user.login', methods:['POST'])]
     public function login(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -20,7 +20,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/signup', name: 'signup', methods:['POST'])]
+    #[Route('/signup', name: 'user.signup', methods:['POST'])]
     public function signup(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

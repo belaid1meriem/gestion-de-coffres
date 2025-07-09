@@ -2,30 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Historique;
+use App\Entity\History;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Historique>
+ * @extends ServiceEntityRepository<History>
  */
-class HistoriqueRepository extends ServiceEntityRepository
+class HistoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Historique::class);
+        parent::__construct($registry, History::class);
     }
 
-    public function findAll(): array
-    {
-        return $this->createQueryBuilder("h")
-            ->getQuery()
-            ->getResult();
-    }        
-
-
     //    /**
-    //     * @return Historique[] Returns an array of Historique objects
+    //     * @return History[] Returns an array of History objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -39,7 +31,7 @@ class HistoriqueRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Historique
+    //    public function findOneBySomeField($value): ?History
     //    {
     //        return $this->createQueryBuilder('h')
     //            ->andWhere('h.exampleField = :val')

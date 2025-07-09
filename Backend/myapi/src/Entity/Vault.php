@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\VaultRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[ORM\Entity(repositoryClass: VaultRepository::class)]
+class Vault
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,15 +16,15 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $passwordHash = null;
+    #[ORM\Column(length: 36)]
+    private ?string $code = null;
 
     /**
      * @var Collection<int, History>
      */
-    #[ORM\OneToMany(targetEntity: History::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: History::class, mappedBy: 'vault', orphanRemoval: true)]
     private Collection $histories;
 
     public function __construct()
@@ -37,26 +37,26 @@ class User
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getName(): ?string
     {
-        return $this->email;
+        return $this->name;
     }
 
-    public function setEmail(string $email): static
+    public function setName(string $name): static
     {
-        $this->email = $email;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getPasswordHash(): ?string
+    public function getCode(): ?string
     {
-        return $this->passwordHash;
+        return $this->code;
     }
 
-    public function setPasswordHash(string $passwordHash): static
+    public function setCode(string $code): static
     {
-        $this->passwordHash = $passwordHash;
+        $this->code = $code;
 
         return $this;
     }
@@ -73,7 +73,7 @@ class User
     {
         if (!$this->histories->contains($history)) {
             $this->histories->add($history);
-            $history->setUser($this);
+            $history->setVault($this);
         }
 
         return $this;
@@ -83,8 +83,8 @@ class User
     {
         if ($this->histories->removeElement($history)) {
             // set the owning side to null (unless already changed)
-            if ($history->getUser() === $this) {
-                $history->setUser(null);
+            if ($history->getVault() === $this) {
+                $history->setVault(null);
             }
         }
 
