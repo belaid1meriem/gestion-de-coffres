@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'recherche',
       component: () => import('../views/SearchView.vue')
     },
+    {
+      path:'/user/add',
+      name: 'user-add',
+      component: () => import('../views/AddUserView.vue')
+    },
     // {
     //   path: '/coffre/add',
     //   name: 'coffre-add',
