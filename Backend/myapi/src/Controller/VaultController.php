@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route(path: '/api')]
 final class VaultController extends AbstractController
 {
     public function __construct(
@@ -54,6 +55,16 @@ final class VaultController extends AbstractController
 
         return $this->json([
             'message' => 'Vault code updated successfully',
+            'vault' => $vault,
+        ]);
+    }
+
+    #[Route('/vault/search/{code}', name: 'vault.search', methods: ['GET'])]
+    public function search(string $code): JsonResponse
+    {
+        $vault = $this->vaultService->searchByCode($code);
+
+        return $this->json([
             'vault' => $vault,
         ]);
     }

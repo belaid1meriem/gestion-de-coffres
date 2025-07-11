@@ -83,4 +83,11 @@ class VaultService
         
         return $code;
     }
+
+    public function searchByCode(string $code): ?Vault
+    {
+        return $this->historyRepository
+            ->findOneBy(['code' => $code])
+            ->getVault();
+    }
 }

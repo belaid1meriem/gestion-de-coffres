@@ -3,37 +3,41 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'This email is already in use')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $passwordHash = null;
+    #[ORM\Column]
+    private array $roles = [];
 
-    /**
-     * @var Collection<int, History>
-     */
-    #[ORM\OneToMany(targetEntity: History::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $histories;
+    #[ORM\Column]
+    private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
+    private ?string $firstName = null;
 
-    public function __construct()
-    {
-        $this->histories = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
+    private ?string $lastName = null;
 
     public function getId(): ?int
     {
@@ -48,61 +52,62 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
-    public function getPasswordHash(): ?string
+    public function getUserIdentifier(): string
     {
-        return $this->passwordHash;
+        return (string) $this->email;
     }
 
-    public function setPasswordHash(string $passwordHash): static
+    public function getRoles(): array
     {
-        $this->passwordHash = $passwordHash;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
 
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
         return $this;
     }
 
-    /**
-     * @return Collection<int, History>
-     */
-    public function getHistories(): Collection
+    public function getPassword(): string
     {
-        return $this->histories;
+        return $this->password;
     }
 
-    public function addHistory(History $history): static
+    public function setPassword(string $password): static
     {
-        if (!$this->histories->contains($history)) {
-            $this->histories->add($history);
-            $history->setUser($this);
-        }
-
+        $this->password = $password;
         return $this;
     }
 
-    public function removeHistory(History $history): static
+    public function eraseCredentials(): void
     {
-        if ($this->histories->removeElement($history)) {
-            // set the owning side to null (unless already changed)
-            if ($history->getUser() === $this) {
-                $history->setUser(null);
-            }
-        }
+        // Clear temporary, sensitive data
+    }
 
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): static
+    {
+        $this->firstName = $firstName;
         return $this;
     }
 
-    public function getName(): ?string
+    public function getLastName(): ?string
     {
-        return $this->name;
+        return $this->lastName;
     }
 
-    public function setName(string $name): static
+    public function setLastName(string $lastName): static
     {
-        $this->name = $name;
-
+        $this->lastName = $lastName;
         return $this;
     }
 }
