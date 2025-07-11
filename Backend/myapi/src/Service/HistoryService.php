@@ -2,12 +2,11 @@
 namespace App\Service;
 
 use App\Entity\History;
-use App\Entity\Vault;
 use App\Repository\HistoryRepository;
 use App\Repository\VaultRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use RuntimeException;
+
 
 
 class HistoryService
@@ -38,7 +37,7 @@ class HistoryService
             throw new \Exception('User Not Found');
         }
 
-        $isCodeUnique = $this->historyRepository->findOneBy(['code' => $code]);
+        $isCodeUnique =!$this->historyRepository->findOneBy(['code' => $code]);
         if(!$isCodeUnique){
             throw new \Exception('Code Already Exists');
         }

@@ -16,7 +16,7 @@ const isActive = computed(() => route.path === props.to)
 </script>
 
 <template>
-    <div class="flex items-start  justify-start gap-2 transition-colors duration-300 hover:bg-[#D6D8FF]  px-4 py-2 rounded-md w-full"
+    <div class="flex items-start  justify-start gap-3 transition-colors duration-300 hover:bg-[#D6D8FF]  px-4 py-2 rounded-md w-full"
          :class="{'shadow-[inset_3px_0_0_0_#6C3EF5] bg-[#D6D8FF]': isActive}">
         <component :is="icon" class="w-5 h-full " />
         <RouterLink :to="to" >{{ title }}</RouterLink>

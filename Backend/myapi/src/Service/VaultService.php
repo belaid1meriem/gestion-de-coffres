@@ -1,7 +1,6 @@
 <?php
 namespace App\Service;
 
-use App\Entity\History;
 use App\Entity\Vault;
 use App\Repository\HistoryRepository;
 use App\Repository\VaultRepository;

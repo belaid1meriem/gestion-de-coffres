@@ -27,6 +27,9 @@ class User
     #[ORM\OneToMany(targetEntity: History::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $histories;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->histories = new ArrayCollection();
@@ -87,6 +90,18 @@ class User
                 $history->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

@@ -7,8 +7,8 @@ import Header from './components/Header.vue';
 <template>
   <div class="grid grid-cols-[auto_1fr] h-full">
     <Navbar />
-    <div class="flex-1 h-full p-4 ">
-      <div class="flex-1 h-full p-6 rounded-2xl bg-[#FAFAFB] shadow flex flex-col gap-5">
+    <div class="h-full p-2 ">
+      <div class="p-4 pt-2 rounded-2xl bg-[#FAFAFB] shadow flex flex-col gap-5 h-full  overflow-auto">
         <Header/>
         <RouterView />
       </div>

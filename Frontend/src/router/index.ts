@@ -24,13 +24,13 @@ const router = createRouter({
       component: SignupView ,
     },
     {
-      path: '/historique',
-      name: 'historique',
-      component: () => import('../views/HistoriqueView.vue')
+      path: '/history/:id',
+      name: 'history',
+      component: () => import('../views/HistoryView.vue')
     },
     {
-      path: '/recherche',
-      name: 'recherche',
+      path: '/search',
+      name: 'search',
       component: () => import('../views/SearchView.vue')
     },
     {
@@ -38,16 +38,6 @@ const router = createRouter({
       name: 'user-add',
       component: () => import('../views/AddUserView.vue')
     },
-    // {
-    //   path: '/coffre/add',
-    //   name: 'coffre-add',
-    //   component: () => import('../views/AddCoffreView.vue')
-    // },
-    // {
-    //   path: '/coffre/edit/:id',
-    //   name: 'coffre-edit',
-    //   component: () => import('../views/EditCoffreView.vue'),
-    // },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',  
