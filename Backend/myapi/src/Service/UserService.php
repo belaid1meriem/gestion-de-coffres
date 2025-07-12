@@ -10,7 +10,7 @@ class UserService
         private readonly UserRepository $userRepository
     ){}
 
-    public function login(string $email, string $password)
+    public function signup(string $email, string $password)
     {
         $user = $this->userRepository->findOneBy(["email"=> $email]);
 

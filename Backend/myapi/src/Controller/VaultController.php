@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
+use App\DTO\CreateEditVaultRequest;
+use App\Entity\Vault;
 use App\Service\VaultService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 #[Route(path: '/api')]
 final class VaultController extends AbstractController
 {
     public function __construct(
-    private VaultService $vaultService, 
+    private VaultService $vaultService,
+    private ValidatorInterface $validator 
     ) {}
 
     #[Route('/vaults', name: 'vault.all', methods: ['GET'])]
@@ -24,10 +31,10 @@ final class VaultController extends AbstractController
     }
 
     #[Route('/vault/create', name: 'vault.create', methods: ['POST'])]
-    public function create(Request $request): JsonResponse
+    public function create(CreateEditVaultRequest $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $vault = $this->vaultService->createVault($data['name'], $data['user']);
+
+        $vault = $this->vaultService->createVault($this->getUser(),$request->name);
 
         return $this->json([
             'message' => 'Vault created successfully',
@@ -35,11 +42,10 @@ final class VaultController extends AbstractController
         ], 201);
     }
 
-    #[Route('/vault/edit/name/{id}', name: 'vault.editName', methods: ['PUT'])]
-    public function editName(Request $request, int $id): JsonResponse
+    #[Route('/vault/edit/name/{vault}', name: 'vault.editName', methods: ['PUT'])]
+    public function editName(CreateEditVaultRequest $request,Vault $vault): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $vault = $this->vaultService->editNameVault($data['name'], $id);
+        $vault = $this->vaultService->editNameVault($vault,$request->name);
 
         return $this->json([
             'message' => 'Vault name updated successfully',
@@ -47,11 +53,10 @@ final class VaultController extends AbstractController
         ]);
     }
 
-    #[Route('/vault/edit/code/{id}', name: 'vault.editCode', methods: ['PUT'])]
-    public function editCode(Request $request, int $id): JsonResponse
+    #[Route('/vault/edit/code/{vault}', name: 'vault.editCode', methods: ['PUT'])]
+    public function editCode(Vault $vault): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $vault = $this->vaultService->editCodeVault($id, $data['user']);
+        $vault = $this->vaultService->editCodeVault($vault, $this->getUser());
 
         return $this->json([
             'message' => 'Vault code updated successfully',

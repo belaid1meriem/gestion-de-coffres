@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\User;
 use App\Entity\Vault;
 use App\Repository\HistoryRepository;
 use App\Repository\VaultRepository;
@@ -25,7 +26,7 @@ class VaultService
         return $this->vaultRepository->findAll();
     }
 
-    public function createVault(string $name, int $user): Vault
+    public function createVault(User $user,string $name): Vault
     {
         $vault = new Vault()
             ->setName($name)
@@ -34,40 +35,28 @@ class VaultService
         $this->entityManager->persist($vault);
         $this->entityManager->flush();
 
-        $this->historyService->createHistory($vault->getCode(), $vault->getId(), $user);
+        $this->historyService->createHistory($vault->getCode(), $vault, $user);
     
         return $vault;
     }
 
 
-    public function editNameVault(string $name, int $id): Vault
+    public function editNameVault(Vault $vault,string $name): Vault
     {
-        $vault = $this->vaultRepository->find($id);
-
-        if (!$vault) {
-            throw new \Exception('Vault not found');
-        }
-
         $vault->setName($name);
         $this->entityManager->flush();
 
         return $vault;
     }
 
-    public function editCodeVault(int $id, int $user): Vault
+    public function editCodeVault(Vault $vault, User $user): Vault
     {
-        $vault = $this->vaultRepository->find($id);
-
-        if (!$vault) {
-            throw new \Exception('Vault not found');
-        }
-        
         $code = $this->generateCode(); 
 
         $vault->setCode($code);
         $this->entityManager->flush();
 
-        $this->historyService->createHistory($vault->getCode(), $vault->getId(), $user);
+        $this->historyService->createHistory($vault->getCode(), $vault, $user);
 
         return $vault;
     }

@@ -2,6 +2,8 @@
 namespace App\Service;
 
 use App\Entity\History;
+use App\Entity\User;
+use App\Entity\Vault;
 use App\Repository\HistoryRepository;
 use App\Repository\VaultRepository;
 use App\Repository\UserRepository;
@@ -20,23 +22,13 @@ class HistoryService
     )
     {}
 
-    public function getHistoryByVault(int $id): array
+    public function getHistoryByVault(Vault $vault): array
     {
-        return $this->historyRepository->findBy(['vault'=>$id]);
+        return $this->historyRepository->findBy(['vault'=>$vault]);
     }
 
-    public function createHistory(string $code, int $vault, int $user): History
+    public function createHistory(string $code, Vault $vault, User $user): History
     {
-        $vault = $this->vaultRepository->find($vault);
-        if (!$vault){
-            throw new \Exception('Vault Not Found');
-        }
-
-        $user = $this->userRepository->find($user);
-        if(!$user){
-            throw new \Exception('User Not Found');
-        }
-
         $isCodeUnique =!$this->historyRepository->findOneBy(['code' => $code]);
         if(!$isCodeUnique){
             throw new \Exception('Code Already Exists');

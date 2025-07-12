@@ -1,8 +1,10 @@
 # TODO
 [x] adding serialzers 
 [x]  refactoring
-[] adding DTOs and validation
+[] adding DTOs 
+[] benefetting from the default resolving behaviour
+[] addin custum resolvers for validation 
 [] edge cases and error handling
-[] adding auth functions 
-[] giving access to authenticated users only
+[x] adding auth functions 
+[x] giving access to authenticated users only
 
