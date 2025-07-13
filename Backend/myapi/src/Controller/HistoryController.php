@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Vault;
 use App\Service\HistoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,7 +10,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/api')]
-
 final class HistoryController extends AbstractController
 {
     public function __construct(

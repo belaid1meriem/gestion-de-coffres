@@ -12,7 +12,7 @@ class UserService
 
     public function signup(string $email, string $password)
     {
-        $user = $this->userRepository->findOneBy(["email"=> $email]);
+       
 
     }
 }
