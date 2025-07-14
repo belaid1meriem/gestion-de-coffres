@@ -21,13 +21,13 @@ const toggleMenu = (index) => {
 
 <template>
   <div class="w-full">
-    <table class="min-w-full table-auto border border-gray-200 rounded-md text-sm">
-      <thead class="bg-gray-100 text-left font-medium text-gray-700">
+    <table class="min-w-full table-auto border border-gray-200 rounded-md text-sm w-full">
+      <thead class="bg-gray-100 text-left text-sm w-full ">
         <tr>
           <th class="px-6 py-3 whitespace-nowrap">Name</th>
           <th class="px-6 py-3 whitespace-nowrap">Current Code</th>
-          <th class="px-6 py-3 whitespace-nowrap">Actions</th>
           <th class="px-6 py-3 whitespace-nowrap">History</th>
+          <th class="px-6 py-3 whitespace-nowrap"></th>
         </tr>
       </thead>
       <tbody class="text-gray-800 divide-y divide-gray-200">
