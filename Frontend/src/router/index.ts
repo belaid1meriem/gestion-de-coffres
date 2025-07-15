@@ -24,11 +24,6 @@ const router = createRouter({
       component: SignupView ,
     },
     {
-      path: '/history/:id',
-      name: 'history',
-      component: () => import('../views/HistoryView.vue')
-    },
-    {
       path: '/search',
       name: 'search',
       component: () => import('../views/SearchView.vue')

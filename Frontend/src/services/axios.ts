@@ -22,7 +22,6 @@ api.interceptors.response.use(
     const authStore = useAuthStore()
 
     if (error.response && error.response.status === 401) {
-      // Token is likely expired or invalid
       authStore.token = null // Clear the token
       router.push('/login') // Redirect to login page
     }

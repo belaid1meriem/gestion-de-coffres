@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue';
 import Header from './components/Header.vue';
 import { useAuthStore } from './stores/auth';
 import { onMounted } from 'vue';
-import useSignup from './composables/useSignup';
+import useLogin from './composables/useLogin';
+import useVaults from './composables/useVaults';
+import useHistory from './composables/useHistory';
+import useSearch from './composables/useSearch';
+
 
 const auth = useAuthStore();
 
-// onMounted(async() => {
-//   const signup = useSignup();
-//   await signup.signup("meriem@mail.com", "12345678", "Meriem", "Belaid");
-// });
 </script>
 
 
