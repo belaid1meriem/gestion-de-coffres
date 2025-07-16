@@ -1,29 +1,63 @@
 <script setup lang="ts">
-import { computed, defineProps, type FunctionalComponent, type HTMLAttributes, type VNodeProps } from 'vue';
+import {
+  computed,
+  defineModel,
+  defineProps,
+  type FunctionalComponent,
+  type HTMLAttributes,
+  type VNodeProps
+} from 'vue'
+
+const model = defineModel<string>()
 
 const props = defineProps<{
-    placeholder: string
-    label?: string
-    icon?: FunctionalComponent<HTMLAttributes & VNodeProps, {}, any, {}>
-    iconStyles?: string
-    onClickIcon?: Function
-}>();
+  placeholder?: string
+  label?: string
+  name?: string
+  error?: string
+  type?: string
+  icon?: FunctionalComponent<HTMLAttributes & VNodeProps>
+  iconStyles?: string
+  onClickIcon?: () => void
+  class?: string
+}>()
 
-const showIcon = computed(()=>{
-    return !!props.icon
-})
-
-const showLabel = computed(()=>{
-    return !!props.label
-})
+const showIcon = computed(() => !!props.icon)
+const showLabel = computed(() => !!props.label)
+const inputType = computed(() => props.type || 'text')
 </script>
 
 <template>
-    <div class="flex flex-col items-start justify-center gap-2 p-2 w-full">
-        <label v-if="showLabel" for="" class="px-0 text-[16px]">{{ label }}</label>
-        <div class="w-full flex p-0 relative">
-            <input type="text" class="shadow-sm rounded-lg bg-[#FAFAFB] text-sm text-[#7C7C7C] px-4 py-3 w-full" :placeholder="placeholder">
-            <component v-if="showIcon" :is="icon" class="w-5 h-full absolute right-4 text-[#7C7C7C]" :class="iconStyles" @click="onClickIcon" />
-        </div>
+  <div class="flex flex-col items-start justify-center gap-2 w-full">
+    <label
+      v-if="showLabel"
+      :for="name"
+      class="text-sm font-medium text-gray-700"
+    >
+      {{ label }}
+    </label>
+
+    <div class="relative w-full">
+      <input
+        :id="name"
+        :type="inputType"
+        v-model="model"
+        :placeholder="props.placeholder"
+        class="flex h-10 w-full rounded-md border shadow-xs border-[#E0E0E0] px-3 py-2 text-sm text-[#333] placeholder-[#aaa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6C3EF5] disabled:cursor-not-allowed disabled:opacity-50"
+        :class="[{ 'border-red-500': props.error }, props.class]"
+      />
+
+      <component
+        v-if="showIcon"
+        :is="props.icon"
+        class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#7C7C7C] cursor-pointer"
+        :class="props.iconStyles"
+        @click="props.onClickIcon"
+      />
     </div>
+
+    <p v-if="props.error" class="text-xs text-red-500 mt-1">
+      {{ props.error }}
+    </p>
+  </div>
 </template>

@@ -1,15 +1,12 @@
 <script setup lang="ts">
+import LoginForm from '@/components/LoginForm.vue';
+
 
 </script>
 <template>
-  <div className="flex min-h-svh w-full items-center justify-center">
-    <div className="grid grid-cols-2 rounded-xl border border-[#E0E0E0] p-6 shadow-sm">
-      <div>
-        Form goes here
-      </div>
-      <div class="relative">
-        <img src="@/assets/login.svg" alt="Login Illustration" class="absolute inset-0 h-full w-full object-cover" />
+    <div className="bg-[#FAFAFB] flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <LoginForm />
       </div>
     </div>
-  </div>
 </template>

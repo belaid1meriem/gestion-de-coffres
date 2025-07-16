@@ -43,7 +43,17 @@ const toggleMenu = (index) => {
           <td class="px-6 py-4 text-gray-600 truncate max-w-xs" :title="vault.code">
             {{ vault.code }}
           </td>
-
+          <!-- View History -->
+          <td class="px-6 py-4">
+            <button
+              class="flex items-center gap-1 text-sm text-purple-600 border border-purple-500 px-3 py-1 rounded hover:bg-purple-50 focus:outline-none"
+              title="View History"
+              aria-label="View History"
+            >
+              <ClockIcon class="w-4 h-4" />
+              History
+            </button>
+          </td>
           <!-- Dropdown Actions -->
           <td class="px-6 py-4 relative">
             <div class="relative inline-block text-left">
@@ -83,17 +93,7 @@ const toggleMenu = (index) => {
             </div>
           </td>
 
-          <!-- View History -->
-          <td class="px-6 py-4">
-            <button
-              class="flex items-center gap-1 text-sm text-purple-600 border border-purple-500 px-3 py-1 rounded hover:bg-purple-50 focus:outline-none"
-              title="View History"
-              aria-label="View History"
-            >
-              <ClockIcon class="w-4 h-4" />
-              History
-            </button>
-          </td>
+
         </tr>
       </tbody>
     </table>

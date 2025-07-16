@@ -1,14 +1,15 @@
 import { useAuthStore } from "@/stores/auth";
 import api from "@/services/axios";
 import { ref } from "vue";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
 const useSignup = () => {
 
     const isLoading = ref(false);
     const error = ref<string|null>(null);
     const authStore = useAuthStore();
-
+    const router = useRouter()
+    
     const signup = async (email: string, lastName: string, firstName: string, password: string): Promise<void> => {
 
         isLoading.value = true;
@@ -24,7 +25,6 @@ const useSignup = () => {
                 throw new Error("signup failed, please try again!");
             }
         } catch (err) {
-            error.value = err instanceof Error ? err.message : "signup failed, please try again!";
             if (
                 typeof err === "object" &&
                 err !== null &&
@@ -36,9 +36,9 @@ const useSignup = () => {
                 (err as any).response.data !== null &&
                 "error" in (err as any).response.data
             ) {
-                console.error("signup error:", (err as any).response.data.error);
+                error.value = (err as any).response.data.error;
             } else {
-                console.error("signup error:", err);
+                error.value = err instanceof Error ? err.message : "signup failed, please try again!";
             }
         } finally {
             isLoading.value = false;

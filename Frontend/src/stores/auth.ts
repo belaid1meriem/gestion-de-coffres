@@ -12,7 +12,6 @@ export const useAuthStore = defineStore("auth", () => {
 
     const isAuthenticated = computed(() => !!token.value);
 
-
     watch(token, (newToken) => {
         if (newToken) {
             localStorage.setItem("token", JSON.stringify(newToken));

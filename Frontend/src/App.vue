@@ -4,14 +4,16 @@ import Navbar from './components/Navbar.vue';
 import Header from './components/Header.vue';
 import { useAuthStore } from './stores/auth';
 import { onMounted } from 'vue';
-import useLogin from './composables/useLogin';
-import useVaults from './composables/useVaults';
-import useHistory from './composables/useHistory';
-import useSearch from './composables/useSearch';
+import SlideIn from './components/SlideIn.vue';
 
 
 const auth = useAuthStore();
-
+// onMounted(
+//   async () =>{
+//     const login = useLogin()
+//     await login.login("meriem@email.com","12345678")
+//   }
+// )
 </script>
 
 
@@ -30,6 +32,7 @@ const auth = useAuthStore();
   <div v-else class="h-screen">
     <RouterView />
   </div>
+  <!-- <SlideIn/> -->
 </template>
 
 

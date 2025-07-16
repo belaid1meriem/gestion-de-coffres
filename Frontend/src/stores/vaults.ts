@@ -6,9 +6,6 @@ export const useVaultsStore = defineStore("vaults", () => {
 
     const vaults = ref<Vault[]>([]);
 
-    watch(vaults,(newVaults)=>{
-        console.log(newVaults)
-    })
     return {
         vaults,
     }
