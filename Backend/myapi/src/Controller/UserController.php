@@ -133,4 +133,40 @@ class UserController extends AbstractController
             ]
         ]);
     }
+
+
+    /**
+     * Handles user registration.
+     *
+     * @param SignupRequest $request The signup request DTO mapped from JSON payload
+     *
+     * @return JsonResponse Returns a JSON response with the created user and JWT token
+     */
+    #[Route('/add/user', name: 'api_add_user', methods: ['POST'])]
+    public function addUser(
+        #[MapRequestPayload()]
+        SignupRequest $request
+    ): JsonResponse {
+        try {
+            $user = $this->userService->addUser(
+                $request->email,
+                $request->password,
+                $request->firstName,
+                $request->lastName
+            );
+
+            return new JsonResponse([
+                'message' => 'User created successfully',
+                'user' => [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'firstName' => $user->getFirstName(),
+                    'lastName' => $user->getLastName(),
+                ],
+            ], Response::HTTP_CREATED);
+
+        } catch (ConflictHttpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()],  Response::HTTP_CONFLICT);
+        }
+    }
 }

@@ -4,7 +4,7 @@ import IconLoading from '@/components/icons/IconLoading.vue';
 import VaultCard from '@/components/VaultCard.vue';
 import { useVaultsStore } from '@/stores/vaults'
 import { PlusIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const modals = {
   createVault: ref<boolean>(false)
@@ -20,7 +20,11 @@ const close = (key: keyof typeof modals) => {
   modals[key].value = false
 }
 
-
+onMounted(async ()=>{
+  if(vaults.vaults.length === 0){
+    await vaults.fetchVaults();
+  }
+})
 </script>
 
 <template>

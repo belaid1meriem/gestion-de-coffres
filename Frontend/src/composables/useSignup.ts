@@ -2,7 +2,6 @@ import { useAuthStore } from "@/stores/auth";
 import api from "@/services/axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { nextTick } from "vue";
 const useSignup = () => {
 
     const isLoading = ref(false);
@@ -20,7 +19,6 @@ const useSignup = () => {
             const token = response.data.token;
             if (token) {
                 authStore.token = token;
-                await nextTick();
                 router.push("/");
             } else {
                 throw new Error("signup failed, please try again!");

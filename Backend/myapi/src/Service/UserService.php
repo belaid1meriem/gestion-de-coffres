@@ -90,4 +90,36 @@ class UserService
 
         return new AuthResponse($user, $token);
     }
+
+    /**
+     * Registers a new user and returns a JWT token along with user info.
+     *
+     * @param string $email User email (must be unique).
+     * @param string $password Plain text password.
+     * @param string $firstName User's first name.
+     * @param string $lastName User's last name.
+     *
+     * @return AuthResponse Response containing user info and JWT token.
+     *
+     * @throws ConflictHttpException If the email is already registered.
+     */
+    public function addUser(string $email, string $password, string $firstName, string $lastName): User
+    {
+        // Check if user already exists
+        if ($this->userRepository->findOneBy(['email' => $email])) {
+            throw new ConflictHttpException('Email is already registered.');
+        }
+
+        $user = new User();
+        $user->setEmail($email);
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $user->setPassword($this->passwordHasher->hashPassword($user, $password));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+
+        return $user;
+    }
 }

@@ -41,6 +41,7 @@ export const useVaultsStore = defineStore("vaults", () => {
     return {
         vaults,
         isFetching,
-        fetchError
+        fetchError,
+        fetchVaults
     }
 })
