@@ -9,6 +9,7 @@ import { defineProps } from 'vue'
 import type Vault from '@/interfaces/vault';
 import HistorySlideIn from './HistorySlideIn.vue';
 import RegenrateCodeModal from './RegenrateCodeModal.vue';
+import UpdateVaultSlideIn from './UpdateVaultSlideIn.vue';
 
 const props = defineProps<{
   vault: Vault
@@ -56,5 +57,6 @@ const close = (key: keyof typeof modals) => {
     <!-- modals -->
     <HistorySlideIn :close="() => close('history')" :id="vault.id" v-if="modals.history.value"  />
     <RegenrateCodeModal :show="modals.updateCode.value" :close="() => close('updateCode') " :id="vault.id"/> 
+    <UpdateVaultSlideIn :close="() => close('updateName')" :id="vault.id" :name="vault.name" v-if="modals.updateName.value"/>
   </div>
 </template>

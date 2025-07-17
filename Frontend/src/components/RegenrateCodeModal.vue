@@ -5,6 +5,8 @@ import ButtonPrimary from './ui/ButtonPrimary.vue';
 import Modal from './ui/Modal.vue';
 import SuccessIndicator from './ui/SuccessIndicator.vue';
 import ErrorIndicator from './ui/ErrorIndicator.vue';
+import { watch } from 'vue';
+import { toast } from 'vue-sonner';
 
 const props = defineProps<{
   show: boolean
@@ -13,6 +15,22 @@ const props = defineProps<{
 }>()
 
 const vaults = useVaults()
+
+watch(() => vaults.updateCodeSuccess.value, () => {
+    if (vaults.updateCodeSuccess.value) {
+        props.close()
+        toast.success(vaults.updateCodeSuccess.value)
+    }
+})
+
+watch(() => vaults.updateCodeError.value, () => {
+    if (vaults.updateCodeError.value) {
+        props.close()
+        toast.success(vaults.updateCodeError.value)
+    }
+})
+
+
 </script>
 
 <template>
@@ -25,22 +43,4 @@ const vaults = useVaults()
             </div>
         </div>
     </Modal>
-
-    <!-- Indicators for better UX -->
-    <SuccessIndicator
-        v-if="!!vaults.updateCodeSuccess.value"
-        :msg="vaults.updateCodeSuccess.value"
-        :closeSuccess="() => {
-            vaults.updateCodeSuccess.value = null
-            close()
-        }"
-    />
-    <ErrorIndicator
-        v-if="!!vaults.updateCodeError.value"
-        :msg="vaults.updateCodeError.value"
-        :closeError="() => {
-            vaults.updateCodeError.value = null
-            close()
-        }"
-    />
 </template>

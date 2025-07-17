@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconNavbar from './icons/IconNavbar.vue';
-import ButtonOutline from './ui/ButtonOutline.vue';
+import IconNavbar from '../icons/IconNavbar.vue';
+import ButtonOutline from './ButtonOutline.vue';
 import useLogout from '@/composables/useLogout';
 
 const logout = useLogout();

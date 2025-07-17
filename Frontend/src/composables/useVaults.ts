@@ -86,6 +86,7 @@ const useVaults = () => {
     // Create
     isCreating,
     createError,
+    createSuccess,
     createVault,
 
     // Update Code

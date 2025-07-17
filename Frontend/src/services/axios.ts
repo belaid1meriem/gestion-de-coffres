@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router' 
+import { nextTick } from 'vue'
 
 const api = axios.create({
   baseURL: 'http://localhost:8000/api',
@@ -18,11 +19,12 @@ api.interceptors.request.use((config) => {
 // Response interceptor to handle token expiration
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const authStore = useAuthStore()
 
     if (error.response && error.response.status === 401) {
       authStore.token = null // Clear the token
+      await nextTick()
       router.push('/login') // Redirect to login page
     }
 

@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import 'vue-sonner/style.css'
 import { RouterView } from 'vue-router'
-import Navbar from './components/Navbar.vue';
-import Header from './components/Header.vue';
+import Navbar from './components/ui/Navbar.vue';
+import Header from './components/ui/Header.vue';
 import { useAuthStore } from './stores/auth';
-import { onMounted } from 'vue';
-import SlideIn from './components/ui/SlideIn.vue';
+import { Toaster } from 'vue-sonner';
 
 
 const auth = useAuthStore();
@@ -32,7 +32,9 @@ const auth = useAuthStore();
   <div v-else class="h-screen">
     <RouterView />
   </div>
-  <!-- <SlideIn/> -->
+  <teleport to="body">
+    <Toaster position="bottom-left" rich-colors />
+  </teleport>
 </template>
 
 
