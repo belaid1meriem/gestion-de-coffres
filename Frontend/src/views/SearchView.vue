@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Input from '../components/Input.vue';
+import Input from '../components/ui/Input.vue';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 
 </script>

@@ -4,7 +4,7 @@ import Navbar from './components/Navbar.vue';
 import Header from './components/Header.vue';
 import { useAuthStore } from './stores/auth';
 import { onMounted } from 'vue';
-import SlideIn from './components/SlideIn.vue';
+import SlideIn from './components/ui/SlideIn.vue';
 
 
 const auth = useAuthStore();

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useHistory from '@/composables/useHistory';
-import SlideIn from './SlideIn.vue';
+import SlideIn from './ui/SlideIn.vue';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import type MyHistory from '@/interfaces/history';

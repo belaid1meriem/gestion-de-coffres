@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import Input from './Input.vue';
-import ButtonPrimary from './ButtonPrimary.vue';
+import Input from './ui/Input.vue';
+import ButtonPrimary from './ui/ButtonPrimary.vue';
 import useLoginForm from '@/composables/forms/useLoginForm';
 
 const { 

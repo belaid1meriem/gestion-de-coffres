@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import useVaults from '@/composables/useVaults';
-import ButtonOutline from './ButtonOutline.vue';
-import ButtonPrimary from './ButtonPrimary.vue';
-import Modal from './Modal.vue';
-import SuccessIndicator from './SuccessIndicator.vue';
-import ErrorIndicator from './ErrorIndicator.vue';
+import ButtonOutline from './ui/ButtonOutline.vue';
+import ButtonPrimary from './ui/ButtonPrimary.vue';
+import Modal from './ui/Modal.vue';
+import SuccessIndicator from './ui/SuccessIndicator.vue';
+import ErrorIndicator from './ui/ErrorIndicator.vue';
 
 const props = defineProps<{
   show: boolean
