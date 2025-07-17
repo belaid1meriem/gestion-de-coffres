@@ -1,4 +1,3 @@
-// composables/useLoginForm.ts
 import { useField, useForm } from 'vee-validate';
 import * as yup from 'yup';
 import useLogin from '../useLogin';

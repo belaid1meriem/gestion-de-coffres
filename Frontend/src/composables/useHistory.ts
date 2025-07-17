@@ -1,4 +1,4 @@
-import type History from "@/Interfaces/history";
+import type History from "@/interfaces/history";
 import api from "@/services/axios";
 import { ref } from "vue";
 
@@ -7,7 +7,7 @@ const useHistory = () => {
     const isLoading = ref(false);
     const error = ref<string|null>(null);
 
-    const getHistory = async (id: number): Promise<History | null> => {
+    const getHistory = async (id: number): Promise<History[] | null> => {
         isLoading.value = true;
         error.value = null;
         let history = null 

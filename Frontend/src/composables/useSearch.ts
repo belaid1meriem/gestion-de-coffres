@@ -1,4 +1,4 @@
-import type Vault from "@/Interfaces/vault";
+import type Vault from "@/interfaces/vault";
 import api from "@/services/axios";
 import { ref } from "vue";
 

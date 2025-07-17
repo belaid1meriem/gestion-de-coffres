@@ -1,4 +1,4 @@
-import type User from "@/Interfaces/user";
+import type User from "@/interfaces/user";
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 

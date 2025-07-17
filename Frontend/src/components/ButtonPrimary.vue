@@ -2,7 +2,7 @@
 const props = defineProps<{
     class?: string
     text: string
-    onClick?: () => void
+    onClick?: (...args: any[]) => any
     disabled?: boolean
 }>();
 </script>

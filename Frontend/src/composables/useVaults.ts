@@ -6,10 +6,6 @@ import api from "@/services/axios"
 const useVaults = () => {
   const vaultsStore = useVaultsStore()
 
-  // States for FETCH
-  const isFetching = ref(false)
-  const fetchError = ref<string | null>(null)
-
   // States for CREATE
   const isCreating = ref(false)
   const createError = ref<string | null>(null)
@@ -26,23 +22,6 @@ const useVaults = () => {
   const updateNameSuccess = ref<string | null>(null)
 
 
-  let refreshTimer: ReturnType<typeof setTimeout> | null = null
-
-  // 🟢 Fetch all vaults
-  const fetchVaults = async (): Promise<void> => {
-    isFetching.value = true
-    fetchError.value = null
-
-    try {
-      const response = await api.get("/vaults")
-      vaultsStore.vaults = response.data
-    } catch (err) {
-      fetchError.value = err instanceof Error ? err.message : "Failed to fetch vaults."
-    } finally {
-      isFetching.value = false
-      refreshTimer = setTimeout(fetchVaults, 600000) // auto-refresh every 10 min
-    }
-  }
 
   // 🟢 Create a new vault
   const createVault = async (name: string): Promise<void> => {
@@ -67,8 +46,10 @@ const useVaults = () => {
     updateNameSuccess.value = null
     try {
       const response = await api.put(`/vault/edit/name/${id}`, { name })
-      vaultsStore.vaults = vaultsStore.vaults.filter((vault) => vault.id!== id )
-      vaultsStore.vaults.push(response.data.vault)
+      const vault = vaultsStore.vaults.find(v => v.id === response.data.vault.id);
+      if (vault) {
+        vault.name = response.data.vault.name; 
+      }
       updateNameSuccess.value = "Vault updated successfully!"
     } catch (err) {
       updateNameError.value = err instanceof Error ? err.message : "Failed to update vault."
@@ -84,8 +65,10 @@ const useVaults = () => {
     updateCodeSuccess.value = null
     try {
       const response = await api.put(`/vault/edit/code/${id}`)
-      vaultsStore.vaults = vaultsStore.vaults.filter((vault) => vault.id!== id )
-      vaultsStore.vaults.push(response.data.vault)
+      const vault = vaultsStore.vaults.find(v => v.id === response.data.vault.id);
+      if (vault) {
+        vault.code = response.data.vault.code; 
+      }
       updateCodeSuccess.value = "Vault updated successfully!"
     } catch (err) {
       updateCodeError.value = err instanceof Error ? err.message : "Failed to update vault."
@@ -96,20 +79,9 @@ const useVaults = () => {
 
 
 
-  // Lifecycle: auto-fetch on mount and clean up on unmount
-  onMounted(() => {
-    fetchVaults()
-  })
 
-  onUnmounted(() => {
-    if (refreshTimer) clearTimeout(refreshTimer)
-  })
 
   return {
-    // Fetch
-    isFetching,
-    fetchError,
-    fetchVaults,
 
     // Create
     isCreating,
@@ -119,11 +91,13 @@ const useVaults = () => {
     // Update Code
     isUpdatingCode,
     updateCodeError,
+    updateCodeSuccess,
     updateCodeVault,
 
     // Update Name
     isUpdatingName,
     updateNameError,
+    updateNameSuccess,
     updateNameVault,
 
   }
