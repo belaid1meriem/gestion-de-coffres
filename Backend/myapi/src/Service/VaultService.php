@@ -7,8 +7,8 @@ use App\Entity\Vault;
 use App\Repository\HistoryRepository;
 use App\Repository\VaultRepository;
 use App\Repository\UserRepository;
-use App\Service\HistoryService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 /**
  * Service responsible for managing vault operations such as creation, update, code regeneration, and lookup by code.
@@ -109,8 +109,13 @@ class VaultService
         $code = bin2hex(random_bytes(18));
 
         // Ensure the code is unique in the history table
-        while ($this->historyRepository->findOneBy(['code' => $code])) {
+        $maxLoop = 10;
+        while ($this->historyRepository->findOneBy(['code' => $code]) && $maxLoop > 0) {
             $code = bin2hex(random_bytes(18));
+            $maxLoop--;
+        }
+        if ($maxLoop === 0) {
+            throw new Exception('Failed to generate code');
         }
 
         return $code;
@@ -126,6 +131,7 @@ class VaultService
     public function searchByCode(string $code): ?Vault
     {
         $history = $this->historyRepository->findOneBy(['code' => $code]);
+
         return $history ? $history->getVault() : null;
     }
 }

@@ -45,10 +45,8 @@ final class VaultController extends AbstractController
      * @return JsonResponse JSON response with the created vault data.
      */
     #[Route('/vault/create', name: 'vault.create', methods: ['POST'])]
-    public function create(
-        #[MapRequestPayload]
-        CreateEditVaultRequest $request
-    ): JsonResponse {
+    public function create( #[MapRequestPayload] CreateEditVaultRequest $request ): JsonResponse
+    {
         $vault = $this->vaultService->createVault($this->getUser(), $request->name);
 
         return $this->json([
@@ -66,11 +64,8 @@ final class VaultController extends AbstractController
      * @return JsonResponse JSON response with the updated vault.
      */
     #[Route('/vault/edit/name/{vault}', name: 'vault.editName', methods: ['PUT'])]
-    public function editName(
-        #[MapRequestPayload]
-        CreateEditVaultRequest $request,
-        Vault $vault
-    ): JsonResponse {
+    public function editName(#[MapRequestPayload] CreateEditVaultRequest $request, Vault $vault): JsonResponse
+    {
         $vault = $this->vaultService->editNameVault($vault, $request->name);
 
         return $this->json([
